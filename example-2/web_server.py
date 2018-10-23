@@ -45,7 +45,7 @@ with socket.socket() as s:
         conn, addr = s.accept()
         with conn:
             print("Connected by", addr)
-            data = conn.recv(MAX_SIZE).decode('utf-8').strip()
-            request = parse_http(data)
+            http_request = conn.recv(MAX_SIZE).decode('utf-8').strip()
+            request = parse_http(http_request)
             response = process_request(request)
             conn.sendall(response.encode('utf-8'))
