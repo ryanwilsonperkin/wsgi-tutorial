@@ -6,3 +6,4 @@ Tutorial about the use of WSGI
 * example-2: parses valid requests, returns simple text
 * example-3: parses valid requests, sends valid responses
 * example-4: a true WSGI application!
+* example-5: drop custom web server, use uwsgi
