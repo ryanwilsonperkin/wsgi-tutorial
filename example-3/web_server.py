@@ -37,15 +37,16 @@ def process_request(request):
     return f'Hello {request["path"]}'
 
 
-def prepare_response(response):
+def process_response_headers(response):
     content_length = len(response)
-    return f"""
-HTTP/1.1 200 OK
-Content-Length: {content_length}
-Content-Type: text/html
-
-{response}
-"""
+    return CRLF.join([
+        'HTTP/1.1 200 OK',
+        f'Content-Length: {content_length}',
+        'Content-Type: text/html',
+        # Include a blank line at the end
+        '',
+        '',
+    ])
 
 
 with socket.socket() as s:
@@ -59,5 +60,8 @@ with socket.socket() as s:
             http_request = conn.recv(MAX_SIZE).decode('utf-8').strip()
             request = parse_http(http_request)
             response = process_request(request)
-            http_response = prepare_response(response)
-            conn.sendall(http_response.encode('utf-8'))
+            response_headers = process_response_headers(response)
+
+            # Send HTTP response
+            conn.sendall(response_headers.encode('utf-8'))
+            conn.sendall(response.encode('utf-8'))
