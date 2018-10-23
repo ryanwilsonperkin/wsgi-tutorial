@@ -5,3 +5,4 @@ Tutorial about the use of WSGI
 * example-1: accepts valid requests, returns simple text
 * example-2: parses valid requests, returns simple text
 * example-3: parses valid requests, sends valid responses
+* example-4: a true WSGI application!
